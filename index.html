@@ -7,628 +7,609 @@
 <link rel="manifest" href="/site.webmanifest">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Access all the PDF tools you need — free, fast, and online. Edit, merge, split, compress, and convert PDF files with no signup required.">
-  <title>Free PDF Tools Online – FreePDFToolsHub.com</title>
+  <title>Free PDF Tools Hub</title>
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
   <script src="/_sdk/element_sdk.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Playfair+Display:wght@700;800&amp;display=swap" rel="stylesheet">
   <style>
-    :root {
-      --bg-color: #0f172a;
-      --surface-color: #1e293b;
-      --text-color: #f1f5f9;
-      --primary-action: #ef4444;
-      --secondary-action: #94a3b8;
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; font-family: 'DM Sans', sans-serif; }
+    .font-display { font-family: 'Playfair Display', serif; }
+
+    /* Logo animation - instant render with subtle pulse */
+    .logo-icon {
+      animation: logoPulse 2s ease-in-out infinite;
     }
-    * { font-family: 'Plus Jakarta Sans', sans-serif; }
-    .gradient-text {
-      background: linear-gradient(135deg, #ef4444 0%, #f97316 50%, #eab308 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+    @keyframes logoPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
     }
+
+    /* Card hover */
     .tool-card {
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
     }
     .tool-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 20px 40px -12px rgba(239, 68, 68, 0.25);
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.12);
     }
-    .btn-primary {
-      background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+
+    /* Button ripple */
+    .btn-tool {
+      position: relative;
+      overflow: hidden;
       transition: all 0.3s ease;
     }
-    .btn-primary:hover {
-      background: linear-gradient(135deg, #f87171 0%, #ef4444 100%);
-      transform: translateY(-2px);
-      box-shadow: 0 10px 30px -8px rgba(239, 68, 68, 0.5);
-    }
-    .floating-shape {
+    .btn-tool::after {
+      content: '';
       position: absolute;
+      top: 50%; left: 50%;
+      width: 0; height: 0;
+      background: rgba(255,255,255,0.3);
       border-radius: 50%;
-      filter: blur(80px);
-      opacity: 0.15;
-      animation: float 20s ease-in-out infinite;
+      transform: translate(-50%, -50%);
+      transition: width 0.5s, height 0.5s;
     }
-    @keyframes float {
-      0%, 100% { transform: translate(0, 0) rotate(0deg); }
-      33% { transform: translate(30px, -30px) rotate(120deg); }
-      66% { transform: translate(-20px, 20px) rotate(240deg); }
+    .btn-tool:active::after {
+      width: 300px; height: 300px;
     }
-    .fade-in {
-      animation: fadeIn 0.5s ease-out forwards;
+
+    /* Mobile bottom nav */
+    .mobile-nav-item {
+      transition: all 0.2s ease;
     }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
+    .mobile-nav-item.active {
+      color: #e74c3c;
+      transform: scale(1.1);
+    }
+    .mobile-nav-item.active .nav-dot {
+      opacity: 1;
+      transform: scale(1);
+    }
+    .nav-dot {
+      opacity: 0;
+      transform: scale(0);
+      transition: all 0.3s ease;
+    }
+
+    /* Section transitions */
+    .section-view {
+      animation: fadeSlideIn 0.4s ease forwards;
+    }
+    @keyframes fadeSlideIn {
+      from { opacity: 0; transform: translateY(12px); }
       to { opacity: 1; transform: translateY(0); }
     }
-    .stagger-1 { animation-delay: 0.1s; }
-    .stagger-2 { animation-delay: 0.2s; }
-    .stagger-3 { animation-delay: 0.3s; }
-    .stagger-4 { animation-delay: 0.4s; }
-    .stagger-5 { animation-delay: 0.5s; }
+
+    /* Stagger cards */
+    .tool-card:nth-child(1) { animation: cardIn 0.5s 0.1s ease both; }
+    .tool-card:nth-child(2) { animation: cardIn 0.5s 0.2s ease both; }
+    .tool-card:nth-child(3) { animation: cardIn 0.5s 0.3s ease both; }
+    .tool-card:nth-child(4) { animation: cardIn 0.5s 0.4s ease both; }
+    .tool-card:nth-child(5) { animation: cardIn 0.5s 0.5s ease both; }
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(20px) scale(0.95); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* Blog card */
+    .blog-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .blog-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #1a1a2e; }
+    ::-webkit-scrollbar-thumb { background: #e74c3c; border-radius: 3px; }
+
+    /* Legal page styles */
+    .legal-content h2 { margin-top: 1.5rem; margin-bottom: 0.75rem; }
+    .legal-content p { margin-bottom: 1rem; line-height: 1.7; }
   </style>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            midnight: '#0f0f23',
+            surface: '#1a1a2e',
+            accent: '#e74c3c',
+            accentHover: '#c0392b',
+            cream: '#f0ece2'
+          }
+        }
+      }
+    }
+  </script>
   <style>body { box-sizing: border-box; }</style>
   <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
  </head>
- <body class="h-full" style="background-color: var(--bg-color); color: var(--text-color);">
-  <div id="app-wrapper" class="h-full w-full overflow-auto"><!-- Floating Background Shapes -->
-   <div class="floating-shape" style="width: 400px; height: 400px; background: #ef4444; top: -100px; right: -100px;"></div>
-   <div class="floating-shape" style="width: 300px; height: 300px; background: #f97316; bottom: 20%; left: -50px; animation-delay: -7s;"></div>
-   <div class="floating-shape" style="width: 250px; height: 250px; background: #eab308; top: 50%; right: 10%; animation-delay: -14s;"></div><!-- Navigation -->
-   <header class="relative z-10">
-    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-     <div class="flex items-center justify-between"><a href="#home" class="flex items-center gap-3 group">
-       <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background: linear-gradient(135deg, #ef4444, #f97316);">
-        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-        </svg>
-       </div><span id="site-title" class="text-xl font-bold" style="color: var(--text-color);">FreePDFToolsHub</span> </a>
-      <div class="hidden md:flex items-center gap-8"><a href="#home" class="nav-link text-sm font-medium hover:text-red-400 transition-colors" style="color: var(--secondary-action);">Tools</a> <a href="#blog" class="nav-link text-sm font-medium hover:text-red-400 transition-colors" style="color: var(--secondary-action);">Blog</a> <a href="#about" class="nav-link text-sm font-medium hover:text-red-400 transition-colors" style="color: var(--secondary-action);">About</a> <a href="#contact" class="nav-link text-sm font-medium hover:text-red-400 transition-colors" style="color: var(--secondary-action);">Contact</a>
-      </div><button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg" style="background-color: var(--surface-color);">
-       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-       </svg></button>
-     </div><!-- Mobile Menu -->
-     <div id="mobile-menu" class="hidden md:hidden mt-4 p-4 rounded-xl" style="background-color: var(--surface-color);">
-      <div class="flex flex-col gap-4"><a href="#home" class="text-sm font-medium" style="color: var(--secondary-action);">Tools</a> <a href="#blog" class="text-sm font-medium" style="color: var(--secondary-action);">Blog</a> <a href="#about" class="text-sm font-medium" style="color: var(--secondary-action);">About</a> <a href="#contact" class="text-sm font-medium" style="color: var(--secondary-action);">Contact</a>
-      </div>
-     </div>
-    </nav>
-   </header><!-- Main Content Area -->
-   <main id="main-content" class="relative z-10"><!-- Homepage -->
-    <div id="page-home" class="page-content"><!-- Hero Section -->
-     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
-      <div class="fade-in opacity-0"><span class="inline-block px-4 py-2 rounded-full text-xs font-semibold mb-6" style="background-color: var(--surface-color); color: var(--primary-action);"> ✨ 100% Free • No Signup Required </span>
-      </div>
-      <h1 id="hero-heading" class="fade-in opacity-0 stagger-1 text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight mb-6"><span class="gradient-text">Free PDF Tools Online</span><br><span style="color: var(--text-color);">Edit, Merge, Split, Compress, Convert</span></h1>
-      <p id="hero-subheading" class="fade-in opacity-0 stagger-2 text-lg sm:text-xl max-w-3xl mx-auto mb-4" style="color: var(--secondary-action);">Access all the PDF tools you need — free, fast, and online. No signup or credit card required.</p>
-      <p class="fade-in opacity-0 stagger-3 text-base max-w-2xl mx-auto mb-12" style="color: var(--secondary-action);">Manage your PDF files easily. Click any tool below to go to its dedicated page.</p>
-     </section><!-- Tools Grid -->
-     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"><!-- Edit PDF --> <a href="#edit-pdf" class="tool-card fade-in opacity-0 stagger-1 block p-6 rounded-2xl border" style="background-color: var(--surface-color); border-color: rgba(148, 163, 184, 0.1);">
-        <div class="w-14 h-14 rounded-xl flex items-center justify-center mb-4" style="background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(249, 115, 22, 0.2));">
-         <svg class="w-7 h-7" style="color: var(--primary-action);" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-         </svg>
-        </div><h3 class="text-lg font-bold mb-2" style="color: var(--text-color);">Edit PDF</h3><p class="text-sm" style="color: var(--secondary-action);">Modify text, images, and pages in your PDF files instantly.</p></a> <!-- Merge PDF --> <a href="#merge-pdf" class="tool-card fade-in opacity-0 stagger-2 block p-6 rounded-2xl border" style="background-color: var(--surface-color); border-color: rgba(148, 163, 184, 0.1);">
-        <div class="w-14 h-14 rounded-xl flex items-center justify-center mb-4" style="background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(16, 185, 129, 0.2));">
-         <svg class="w-7 h-7 text-green-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
-         </svg>
-        </div><h3 class="text-lg font-bold mb-2" style="color: var(--text-color);">Merge PDF</h3><p class="text-sm" style="color: var(--secondary-action);">Combine multiple PDF files into one document seamlessly.</p></a> <!-- Split PDF --> <a href="#split-pdf" class="tool-card fade-in opacity-0 stagger-3 block p-6 rounded-2xl border" style="background-color: var(--surface-color); border-color: rgba(148, 163, 184, 0.1);">
-        <div class="w-14 h-14 rounded-xl flex items-center justify-center mb-4" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(99, 102, 241, 0.2));">
-         <svg class="w-7 h-7 text-blue-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
-         </svg>
-        </div><h3 class="text-lg font-bold mb-2" style="color: var(--text-color);">Split PDF</h3><p class="text-sm" style="color: var(--secondary-action);">Extract pages or split PDFs into separate files quickly.</p></a> <!-- Compress PDF --> <a href="#compress-pdf" class="tool-card fade-in opacity-0 stagger-4 block p-6 rounded-2xl border" style="background-color: var(--surface-color); border-color: rgba(148, 163, 184, 0.1);">
-        <div class="w-14 h-14 rounded-xl flex items-center justify-center mb-4" style="background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(236, 72, 153, 0.2));">
-         <svg class="w-7 h-7 text-purple-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-         </svg>
-        </div><h3 class="text-lg font-bold mb-2" style="color: var(--text-color);">Compress PDF</h3><p class="text-sm" style="color: var(--secondary-action);">Reduce PDF file size without losing quality.</p></a> <!-- Convert to Word --> <a href="#convert-pdf-to-word" class="tool-card fade-in opacity-0 stagger-5 block p-6 rounded-2xl border" style="background-color: var(--surface-color); border-color: rgba(148, 163, 184, 0.1);">
-        <div class="w-14 h-14 rounded-xl flex items-center justify-center mb-4" style="background: linear-gradient(135deg, rgba(234, 179, 8, 0.2), rgba(251, 146, 60, 0.2));">
-         <svg class="w-7 h-7 text-yellow-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-         </svg>
-        </div><h3 class="text-lg font-bold mb-2" style="color: var(--text-color);">PDF to Word</h3><p class="text-sm" style="color: var(--secondary-action);">Convert PDF files into editable Word documents.</p></a> <!-- More Tools Coming --> <!-- Word to PDF --> <a href="#word-to-pdf" class="tool-card fade-in opacity-0 stagger-5 block p-6 rounded-2xl border" style="background-color: var(--surface-color); border-color: rgba(148, 163, 184, 0.1);">
-        <div class="w-14 h-14 rounded-xl flex items-center justify-center mb-4" style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(168, 85, 247, 0.2));">
-         <svg class="w-7 h-7 text-indigo-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-         </svg>
-        </div><h3 class="text-lg font-bold mb-2" style="color: var(--text-color);">Word to PDF</h3><p class="text-sm" style="color: var(--secondary-action);">Convert Word documents to PDF format easily.</p></a>
-      </div>
-     </section><!-- Features Section -->
-     <section class="py-20" style="background-color: var(--surface-color);">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-       <h2 class="text-3xl font-bold text-center mb-4" style="color: var(--text-color);">Why Choose FreePDFToolsHub?</h2>
-       <p class="text-center mb-12 max-w-2xl mx-auto" style="color: var(--secondary-action);">We provide the best free PDF tools with no hidden costs or limitations.</p>
-       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div class="text-center">
-         <div class="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4" style="background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(249, 115, 22, 0.2));">
-          <svg class="w-8 h-8" style="color: var(--primary-action);" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-          </svg>
-         </div>
-         <h3 class="text-xl font-bold mb-2" style="color: var(--text-color);">Lightning Fast</h3>
-         <p style="color: var(--secondary-action);">Process your PDFs in seconds with our optimized tools.</p>
-        </div>
-        <div class="text-center">
-         <div class="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4" style="background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(16, 185, 129, 0.2));">
-          <svg class="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-          </svg>
-         </div>
-         <h3 class="text-xl font-bold mb-2" style="color: var(--text-color);">Secure &amp; Private</h3>
-         <p style="color: var(--secondary-action);">Your files are processed securely and never stored.</p>
-        </div>
-        <div class="text-center">
-         <div class="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(99, 102, 241, 0.2));">
-          <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
-          </svg>
-         </div>
-         <h3 class="text-xl font-bold mb-2" style="color: var(--text-color);">100% Free</h3>
-         <p style="color: var(--secondary-action);">No hidden fees, no watermarks, no limitations.</p>
-        </div>
-       </div>
-      </div>
-     </section>
-    </div><!-- Tool Pages (Hidden by default) -->
-    <div id="page-edit-pdf" class="page-content hidden">
-     <section class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16"><a href="#home" class="inline-flex items-center gap-2 mb-8 text-sm font-medium hover:text-red-400 transition-colors" style="color: var(--secondary-action);">
-       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-       </svg> Back to Tools </a>
-      <div class="text-center">
-       <div class="w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6" style="background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(249, 115, 22, 0.2));">
-        <svg class="w-10 h-10" style="color: var(--primary-action);" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-        </svg>
-       </div>
-       <h1 class="text-4xl sm:text-5xl font-extrabold mb-6 gradient-text">Edit PDF Online Free</h1>
-       <p class="text-xl mb-8 max-w-2xl mx-auto" style="color: var(--secondary-action);">Upload your PDF and make changes instantly. Add text, images, annotations, and more with our powerful online PDF editor.</p><a href="https://www.pdfcandy.com/edit-pdf.html" target="_blank" rel="noopener noreferrer" class="btn-primary inline-flex items-center gap-3 px-8 py-4 rounded-xl text-lg font-bold text-white"> Start Editing PDF 
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-        </svg></a>
-       <p class="mt-4 text-sm" style="color: var(--secondary-action);">Opens in a new tab • No signup required</p>
-      </div>
-      <div class="mt-16 p-8 rounded-2xl" style="background-color: var(--surface-color);">
-       <h2 class="text-2xl font-bold mb-4" style="color: var(--text-color);">How to Edit PDF Online Free</h2>
-       <ol class="space-y-4" style="color: var(--secondary-action);">
-        <li class="flex gap-4"><span class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-bold" style="background-color: var(--primary-action); color: white;">1</span><span>Click the "Start Editing PDF" button above</span></li>
-        <li class="flex gap-4"><span class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-bold" style="background-color: var(--primary-action); color: white;">2</span><span>Upload your PDF file from your device or cloud storage</span></li>
-        <li class="flex gap-4"><span class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-bold" style="background-color: var(--primary-action); color: white;">3</span><span>Use the editing tools to modify text, add images, or annotate</span></li>
-        <li class="flex gap-4"><span class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-bold" style="background-color: var(--primary-action); color: white;">4</span><span>Download your edited PDF file</span></li>
-       </ol>
-       <div class="mt-8 rounded-xl overflow-hidden aspect-video">
-        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/onypRVV_Bnw?si=INCBfU8DKXRr9et7" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-       </div>
-      </div>
-     </section>
+ <body class="h-full">
+  <div id="app" class="w-full h-full bg-midnight text-cream overflow-auto" style="padding-bottom: 80px;">
+   <!-- HEADER -->
+   <header class="sticky top-0 z-50 bg-midnight/95 backdrop-blur-md border-b border-white/5">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+     <div class="flex items-center gap-3 cursor-pointer" onclick="navigateTo('home')">
+      <!-- Inline SVG Logo - loads instantly -->
+      <div class="logo-icon w-10 h-10 bg-gradient-to-br from-accent to-red-600 rounded-xl flex items-center justify-center flex-shrink-0">
+       <svg width="22" height="22" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V9L13 2Z" fill="white" /> <text x="12" y="15" font-size="7" font-weight="900" font-family="Arial, sans-serif" text-anchor="middle" fill="#0f0f23">
+         PDF
+        </text>
+       </svg>
+      </div><span id="site-title" class="text-lg font-bold text-white">Free PDF Tools Hub</span>
+     </div><!-- Desktop Nav -->
+     <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
+      <a onclick="navigateTo('home')" class="cursor-pointer hover:text-accent transition-colors">Home</a> <a onclick="navigateTo('tools')" class="cursor-pointer hover:text-accent transition-colors">Tools</a> <a onclick="navigateTo('blog')" class="cursor-pointer hover:text-accent transition-colors">Blog</a> <a onclick="navigateTo('contact')" class="cursor-pointer hover:text-accent transition-colors">Contact</a> <a onclick="navigateTo('about')" class="cursor-pointer hover:text-accent transition-colors">About</a>
+     </nav>
     </div>
-    <div id="page-merge-pdf" class="page-content hidden">
-     <section class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16"><a href="#home" class="inline-flex items-center gap-2 mb-8 text-sm font-medium hover:text-red-400 transition-colors" style="color: var(--secondary-action);">
-       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-       </svg> Back to Tools </a>
-      <div class="text-center">
-       <div class="w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6" style="background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(16, 185, 129, 0.2));">
-        <svg class="w-10 h-10 text-green-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
-        </svg>
+   </header><!-- MOBILE BOTTOM NAV - 4 columns -->
+   <nav id="mobile-nav" class="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-surface/98 backdrop-blur-lg border-t border-white/10 grid grid-cols-5 py-2 px-2">
+    <button onclick="navigateTo('home')" class="mobile-nav-item active flex flex-col items-center gap-1 py-1" data-nav="home"> <i data-lucide="home" class="w-5 h-5"></i> <span class="text-[10px] font-medium">Home</span>
+     <div class="nav-dot w-1 h-1 rounded-full bg-accent"></div></button> <button onclick="navigateTo('tools')" class="mobile-nav-item flex flex-col items-center gap-1 py-1 text-cream/50" data-nav="tools"> <i data-lucide="wrench" class="w-5 h-5"></i> <span class="text-[10px] font-medium">Tools</span>
+     <div class="nav-dot w-1 h-1 rounded-full bg-accent"></div></button> <button onclick="navigateTo('blog')" class="mobile-nav-item flex flex-col items-center gap-1 py-1 text-cream/50" data-nav="blog"> <i data-lucide="book-open" class="w-5 h-5"></i> <span class="text-[10px] font-medium">Blog</span>
+     <div class="nav-dot w-1 h-1 rounded-full bg-accent"></div></button> <button onclick="navigateTo('contact')" class="mobile-nav-item flex flex-col items-center gap-1 py-1 text-cream/50" data-nav="contact"> <i data-lucide="mail" class="w-5 h-5"></i> <span class="text-[10px] font-medium">Contact</span>
+     <div class="nav-dot w-1 h-1 rounded-full bg-accent"></div></button> <button onclick="navigateTo('about')" class="mobile-nav-item flex flex-col items-center gap-1 py-1 text-cream/50" data-nav="about"> <i data-lucide="info" class="w-5 h-5"></i> <span class="text-[10px] font-medium">About</span>
+     <div class="nav-dot w-1 h-1 rounded-full bg-accent"></div></button>
+   </nav><!-- MAIN CONTENT -->
+   <main id="main-content">
+    <!-- HOME SECTION -->
+    <div id="section-home" class="section-view">
+     <!-- Hero -->
+     <section class="relative overflow-hidden pb-16">
+      <div class="absolute inset-0 bg-gradient-to-br from-accent/10 via-transparent to-purple-900/10"></div>
+      <div class="absolute top-20 right-10 w-64 h-64 bg-accent/5 rounded-full blur-3xl"></div>
+      <div class="absolute bottom-10 left-10 w-48 h-48 bg-purple-500/5 rounded-full blur-3xl"></div>
+      <div class="relative max-w-4xl mx-auto px-4 py-16 md:py-24 text-center">
+       <div class="inline-flex items-center gap-2 bg-accent/10 border border-accent/20 rounded-full px-4 py-1.5 text-xs font-medium text-accent mb-6">
+        <i data-lucide="zap" class="w-3 h-3"></i> 2026's Fastest PDF Tools — No Signup Required
        </div>
-       <h1 class="text-4xl sm:text-5xl font-extrabold mb-6 gradient-text">Merge PDF Online Free</h1>
-       <p class="text-xl mb-8 max-w-2xl mx-auto" style="color: var(--secondary-action);">Combine multiple PDF files into one in seconds. Drag and drop to reorder pages before merging.</p><a href="https://tools.pdf24.org/en/merge-pdf" target="_blank" rel="noopener noreferrer" class="btn-primary inline-flex items-center gap-3 px-8 py-4 rounded-xl text-lg font-bold text-white"> Merge PDFs Now 
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-        </svg></a>
-       <p class="mt-4 text-sm" style="color: var(--secondary-action);">Opens in a new tab • No signup required</p>
+       <h1 id="hero-heading" class="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-white leading-tight mb-5">Free PDF Tools Online<br><span class="text-accent">Edit, Merge, Split &amp; More</span></h1>
+       <p id="hero-subheading" class="text-base sm:text-lg text-cream/70 max-w-2xl mx-auto mb-8 leading-relaxed">Access all the PDF tools you need — free, fast, and online. No signup or credit card required. Manage your PDF files easily.</p><button onclick="navigateTo('tools')" class="btn-tool bg-accent hover:bg-accentHover text-white font-semibold px-8 py-3.5 rounded-xl text-base shadow-lg shadow-accent/25"> Explore All Tools → </button>
       </div>
-      <div class="mt-16 p-8 rounded-2xl" style="background-color: var(--surface-color);">
-       <h2 class="text-2xl font-bold mb-4" style="color: var(--text-color);">How to Merge PDFs Online</h2>
-       <ol class="space-y-4" style="color: var(--secondary-action);">
-        <li class="flex gap-4"><span class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-bold" style="background-color: var(--primary-action); color: white;">1</span><span>Click the "Merge PDFs Now" button above</span></li>
-        <li class="flex gap-4"><span class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-bold" style="background-color: var(--primary-action); color: white;">2</span><span>Select multiple PDF files you want to combine</span></li>
-        <li class="flex gap-4"><span class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-bold" style="background-color: var(--primary-action); color: white;">3</span><span>Drag and drop to arrange the order of files</span></li>
-        <li class="flex gap-4"><span class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-bold" style="background-color: var(--primary-action); color: white;">4</span><span>Click merge and download your combined PDF</span></li>
-       </ol>
-       <div class="mt-8 rounded-xl overflow-hidden aspect-video">
-        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/cpXIWjp12xI?si=17go9IqkFnQyv9Sf" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-       </div>
+     </section><!-- Quick Tools Grid -->
+     <section class="max-w-6xl mx-auto px-4 pb-16">
+      <h2 class="text-center text-sm uppercase tracking-widest text-cream/40 font-semibold mb-10">Popular Tools</h2>
+      <div id="tools-grid-home" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
       </div>
      </section>
-    </div>
-    <div id="page-split-pdf" class="page-content hidden">
-     <section class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16"><a href="#home" class="inline-flex items-center gap-2 mb-8 text-sm font-medium hover:text-red-400 transition-colors" style="color: var(--secondary-action);">
-       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-       </svg> Back to Tools </a>
-      <div class="text-center">
-       <div class="w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(99, 102, 241, 0.2));">
-        <svg class="w-10 h-10 text-blue-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
-        </svg>
-       </div>
-       <h1 class="text-4xl sm:text-5xl font-extrabold mb-6 gradient-text">Split PDF Online Free</h1>
-       <p class="text-xl mb-8 max-w-2xl mx-auto" style="color: var(--secondary-action);">Split your PDF pages into separate files quickly. Extract specific pages or split at regular intervals.</p><a href="https://tools.pdf24.org/en/split-pdf" target="_blank" rel="noopener noreferrer" class="btn-primary inline-flex items-center gap-3 px-8 py-4 rounded-xl text-lg font-bold text-white"> Split PDF Now 
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-        </svg></a>
-       <p class="mt-4 text-sm" style="color: var(--secondary-action);">Opens in a new tab • No signup required</p>
-      </div>
-      <div class="mt-16 p-8 rounded-2xl" style="background-color: var(--surface-color);">
-       <h2 class="text-2xl font-bold mb-4" style="color: var(--text-color);">How to Split PDF Online Free</h2>
-       <ol class="space-y-4" style="color: var(--secondary-action);">
-        <li class="flex gap-4"><span class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-bold" style="background-color: var(--primary-action); color: white;">1</span><span>Click the "Split PDF Now" button above</span></li>
-        <li class="flex gap-4"><span class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-bold" style="background-color: var(--primary-action); color: white;">2</span><span>Upload your PDF file</span></li>
-        <li class="flex gap-4"><span class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-bold" style="background-color: var(--primary-action); color: white;">3</span><span>Select pages to extract or choose split options</span></li>
-        <li class="flex gap-4"><span class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-bold" style="background-color: var(--primary-action); color: white;">4</span><span>Download your split PDF files</span></li>
-       </ol>
-       <div class="mt-8 rounded-xl overflow-hidden aspect-video">
-        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/_OZHatt6GSQ?si=__iKrueFXl_BcyFy" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-       </div>
+    </div><!-- TOOLS SECTION -->
+    <div id="section-tools" class="section-view hidden">
+     <section class="max-w-6xl mx-auto px-4 py-12">
+      <h1 class="font-display text-3xl md:text-4xl font-extrabold text-white mb-3 text-center">All PDF Tools</h1>
+      <p class="text-cream/60 text-center mb-10 max-w-xl mx-auto">Click any tool below to go to its dedicated page. Every tool is free and works instantly.</p>
+      <div id="tools-grid-full" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       </div>
      </section>
-    </div>
-    <div id="page-compress-pdf" class="page-content hidden">
-     <section class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16"><a href="#home" class="inline-flex items-center gap-2 mb-8 text-sm font-medium hover:text-red-400 transition-colors" style="color: var(--secondary-action);">
-       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-       </svg> Back to Tools </a>
-      <div class="text-center">
-       <div class="w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6" style="background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(236, 72, 153, 0.2));">
-        <svg class="w-10 h-10 text-purple-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-        </svg>
-       </div>
-       <h1 class="text-4xl sm:text-5xl font-extrabold mb-6 gradient-text">Compress PDF Online Free</h1>
-       <p class="text-xl mb-8 max-w-2xl mx-auto" style="color: var(--secondary-action);">Reduce PDF file size without losing quality. Perfect for email attachments and web uploads.</p><a href="https://www.ilovepdf.com/compress_pdf" target="_blank" rel="noopener noreferrer" class="btn-primary inline-flex items-center gap-3 px-8 py-4 rounded-xl text-lg font-bold text-white"> Compress PDF Now 
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-        </svg></a>
-       <p class="mt-4 text-sm" style="color: var(--secondary-action);">Opens in a new tab • No signup required</p>
+    </div><!-- BLOG SECTION -->
+    <div id="section-blog" class="section-view hidden">
+     <section class="max-w-4xl mx-auto px-4 py-12">
+      <h1 class="font-display text-3xl md:text-4xl font-extrabold text-white mb-3 text-center">Blog &amp; Guides</h1>
+      <p class="text-cream/60 text-center mb-10">Learn how to make the most of your PDF tools</p>
+      <div id="blog-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-5">
       </div>
-      <div class="mt-16 p-8 rounded-2xl" style="background-color: var(--surface-color);">
-       <h2 class="text-2xl font-bold mb-4" style="color: var(--text-color);">How to Compress PDF Without Losing Quality</h2>
-       <ol class="space-y-4" style="color: var(--secondary-action);">
-        <li class="flex gap-4"><span class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-bold" style="background-color: var(--primary-action); color: white;">1</span><span>Click the "Compress PDF Now" button above</span></li>
-        <li class="flex gap-4"><span class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-bold" style="background-color: var(--primary-action); color: white;">2</span><span>Upload your PDF file</span></li>
-        <li class="flex gap-4"><span class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-bold" style="background-color: var(--primary-action); color: white;">3</span><span>Select compression level based on your needs</span></li>
-        <li class="flex gap-4"><span class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-bold" style="background-color: var(--primary-action); color: white;">4</span><span>Download your compressed PDF</span></li>
-       </ol>
-       <div class="mt-8 rounded-xl overflow-hidden aspect-video">
-        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/pcNE_Q8NZqs?si=EyPWw87n_0DteqON" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-       </div>
-      </div>
-     </section>
-    </div>
-    <div id="page-convert-pdf-to-word" class="page-content hidden">
-     <section class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16"><a href="#home" class="inline-flex items-center gap-2 mb-8 text-sm font-medium hover:text-red-400 transition-colors" style="color: var(--secondary-action);">
-       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-       </svg> Back to Tools </a>
-      <div class="text-center">
-       <div class="w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6" style="background: linear-gradient(135deg, rgba(234, 179, 8, 0.2), rgba(251, 146, 60, 0.2));">
-        <svg class="w-10 h-10 text-yellow-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-        </svg>
-       </div>
-       <h1 class="text-4xl sm:text-5xl font-extrabold mb-6 gradient-text">Convert PDF to Word Free</h1>
-       <p class="text-xl mb-8 max-w-2xl mx-auto" style="color: var(--secondary-action);">Convert PDF files into editable Word documents online. Preserve formatting and layout perfectly.</p><a href="https://www.sejda.com/pdf-to-word" target="_blank" rel="noopener noreferrer" class="btn-primary inline-flex items-center gap-3 px-8 py-4 rounded-xl text-lg font-bold text-white"> Convert PDF Now 
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-        </svg></a>
-       <p class="mt-4 text-sm" style="color: var(--secondary-action);">Opens in a new tab • No signup required</p>
-      </div>
-      <div class="mt-16 p-8 rounded-2xl" style="background-color: var(--surface-color);">
-       <h2 class="text-2xl font-bold mb-4" style="color: var(--text-color);">How to Convert PDF to Word Online Free</h2>
-       <ol class="space-y-4" style="color: var(--secondary-action);">
-        <li class="flex gap-4"><span class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-bold" style="background-color: var(--primary-action); color: white;">1</span><span>Click the "Convert PDF Now" button above</span></li>
-        <li class="flex gap-4"><span class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-bold" style="background-color: var(--primary-action); color: white;">2</span><span>Upload your PDF file</span></li>
-        <li class="flex gap-4"><span class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-bold" style="background-color: var(--primary-action); color: white;">3</span><span>Wait for the conversion to complete</span></li>
-        <li class="flex gap-4"><span class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-bold" style="background-color: var(--primary-action); color: white;">4</span><span>Download your editable Word document</span></li>
-       </ol>
-       <div class="mt-8 rounded-xl overflow-hidden aspect-video">
-        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/ZR_C7atnlZk?si=ZcIG51JhQihjA1UR" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-       </div>
-      </div>
-     </section>
-    </div>
-    <div id="page-word-to-pdf" class="page-content hidden">
-     <section class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16"><a href="#home" class="inline-flex items-center gap-2 mb-8 text-sm font-medium hover:text-red-400 transition-colors" style="color: var(--secondary-action);">
-       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-       </svg> Back to Tools </a>
-      <div class="text-center">
-       <div class="w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6" style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(168, 85, 247, 0.2));">
-        <svg class="w-10 h-10 text-indigo-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-        </svg>
-       </div>
-       <h1 class="text-4xl sm:text-5xl font-extrabold mb-6 gradient-text">Convert Word to PDF Free</h1>
-       <p class="text-xl mb-8 max-w-2xl mx-auto" style="color: var(--secondary-action);">Convert your Word documents to PDF format easily and securely. Perfect for sharing and protecting your documents.</p><a href="https://www.ilovepdf.com/word_to_pdf" target="_blank" rel="noopener noreferrer" class="btn-primary inline-flex items-center gap-3 px-8 py-4 rounded-xl text-lg font-bold text-white"> Convert Word Now 
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-        </svg></a>
-       <p class="mt-4 text-sm" style="color: var(--secondary-action);">Opens in a new tab • No signup required</p>
-      </div>
-      <div class="mt-16 p-8 rounded-2xl" style="background-color: var(--surface-color);">
-       <h2 class="text-2xl font-bold mb-4" style="color: var(--text-color);">How to Convert Word to PDF Online Free</h2>
-       <ol class="space-y-4" style="color: var(--secondary-action);">
-        <li class="flex gap-4"><span class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-bold" style="background-color: var(--primary-action); color: white;">1</span><span>Click the "Convert Word Now" button above</span></li>
-        <li class="flex gap-4"><span class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-bold" style="background-color: var(--primary-action); color: white;">2</span><span>Upload your Word document (DOC, DOCX, etc.)</span></li>
-        <li class="flex gap-4"><span class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-bold" style="background-color: var(--primary-action); color: white;">3</span><span>Wait for the conversion to complete</span></li>
-        <li class="flex gap-4"><span class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-bold" style="background-color: var(--primary-action); color: white;">4</span><span>Download your PDF file</span></li>
-       </ol>
-      </div>
-     </section>
-    </div><!-- Blog Page -->
-    <div id="page-blog" class="page-content hidden">
-     <section class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-      <h1 class="text-4xl font-extrabold mb-8 gradient-text text-center">PDF Tips &amp; Guides</h1>
-      <div class="space-y-6">
-       <article class="p-6 rounded-2xl" style="background-color: var(--surface-color);">
-        <h2 class="text-xl font-bold mb-2" style="color: var(--text-color);">How to Edit PDF Online Free</h2>
-        <p style="color: var(--secondary-action);">Learn the best ways to edit your PDF documents online without any software installation. Our guide covers text editing, image insertion, and more.</p><a href="#edit-pdf" class="inline-block mt-4 font-medium" style="color: var(--primary-action);">Read more →</a>
-       </article>
-       <article class="p-6 rounded-2xl" style="background-color: var(--surface-color);">
-        <h2 class="text-xl font-bold mb-2" style="color: var(--text-color);">Merge PDF Online Easily</h2>
-        <p style="color: var(--secondary-action);">Discover how to combine multiple PDF files into a single document. Perfect for creating reports, portfolios, or organizing documents.</p><a href="#merge-pdf" class="inline-block mt-4 font-medium" style="color: var(--primary-action);">Read more →</a>
-       </article>
-       <article class="p-6 rounded-2xl" style="background-color: var(--surface-color);">
-        <h2 class="text-xl font-bold mb-2" style="color: var(--text-color);">Compress PDF Online Without Losing Quality</h2>
-        <p style="color: var(--secondary-action);">Reduce your PDF file size while maintaining document quality. Essential tips for email attachments and web uploads.</p><a href="#compress-pdf" class="inline-block mt-4 font-medium" style="color: var(--primary-action);">Read more →</a>
-       </article>
-       <article class="p-6 rounded-2xl" style="background-color: var(--surface-color);">
-        <h2 class="text-xl font-bold mb-2" style="color: var(--text-color);">Split PDF Online Free in Seconds</h2>
-        <p style="color: var(--secondary-action);">Learn how to extract pages from PDF documents quickly and easily. Perfect for sharing specific sections of large documents.</p><a href="#split-pdf" class="inline-block mt-4 font-medium" style="color: var(--primary-action);">Read more →</a>
-       </article>
-       <article class="p-6 rounded-2xl" style="background-color: var(--surface-color);">
-        <h2 class="text-xl font-bold mb-2" style="color: var(--text-color);">Convert PDF to Word Online Free</h2>
-        <p style="color: var(--secondary-action);">Transform your PDF files into editable Word documents. Perfect for making changes to contracts, reports, or any document.</p><a href="#convert-pdf-to-word" class="inline-block mt-4 font-medium" style="color: var(--primary-action);">Read more →</a>
-       </article>
-       <article class="p-6 rounded-2xl" style="background-color: var(--surface-color);">
-        <h2 class="text-xl font-bold mb-2" style="color: var(--text-color);">Convert Word to PDF Online Free</h2>
-        <p style="color: var(--secondary-action);">Easily convert your Word documents to PDF format. Perfect for sharing and protecting your documents from unwanted edits.</p><a href="#word-to-pdf" class="inline-block mt-4 font-medium" style="color: var(--primary-action);">Read more →</a>
-       </article>
-      </div>
-     </section>
-    </div><!-- About Page -->
-    <div id="page-about" class="page-content hidden">
-     <section class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-      <h1 class="text-4xl font-extrabold mb-8 gradient-text text-center">About FreePDFToolsHub</h1>
-      <div class="p-8 rounded-2xl" style="background-color: var(--surface-color);">
-       <p class="mb-6" style="color: var(--secondary-action);">FreePDFToolsHub is your one-stop destination for free online PDF tools. We curate and provide access to the best PDF tools available on the internet, all in one convenient place.</p>
-       <p class="mb-6" style="color: var(--secondary-action);">Our mission is to make PDF management accessible to everyone. Whether you need to edit, merge, split, compress, or convert PDF files, we've got you covered with free, reliable tools that require no signup or installation.</p>
-       <h2 class="text-2xl font-bold mb-4" style="color: var(--text-color);">Why We Exist</h2>
-       <p class="mb-6" style="color: var(--secondary-action);">We understand the frustration of searching for reliable PDF tools online. That's why we've done the research for you, selecting only the best free tools that deliver professional results without hidden costs or watermarks.</p>
-       <h2 class="text-2xl font-bold mb-4" style="color: var(--text-color);">Our Promise</h2>
-       <ul class="list-disc list-inside space-y-2" style="color: var(--secondary-action);">
-        <li>Always free to use</li>
-        <li>No account required</li>
-        <li>Curated, quality tools only</li>
-        <li>Regular updates with new features</li>
-       </ul>
-      </div>
-     </section>
-    </div><!-- Contact Page -->
-    <div id="page-contact" class="page-content hidden">
-     <section class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-      <h1 class="text-4xl font-extrabold mb-8 gradient-text text-center">Contact Us</h1>
-      <div class="p-8 rounded-2xl" style="background-color: var(--surface-color);">
-       <p class="mb-6 text-center" style="color: var(--secondary-action);">Have questions or suggestions? We'd love to hear from you!</p>
-       <form id="contact-form" class="space-y-6">
-        <div><label for="name" class="block text-sm font-medium mb-2" style="color: var(--text-color);">Name</label> <input type="text" id="name" name="name" required class="w-full px-4 py-3 rounded-xl border-none focus:ring-2 focus:ring-red-500 outline-none" style="background-color: var(--bg-color); color: var(--text-color);" placeholder="Your name">
+     </section><!-- Why Choose Us Section -->
+     <section class="max-w-4xl mx-auto px-4 py-12">
+      <h2 class="font-display text-2xl md:text-3xl font-extrabold text-white mb-8 text-center">Why 2026 Users Choose Our Tools</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+       <div class="bg-surface rounded-xl border border-white/5 p-5 text-center">
+        <div class="w-12 h-12 bg-accent/20 rounded-full flex items-center justify-center mx-auto mb-3"><i data-lucide="lightning" class="w-6 h-6 text-accent"></i>
         </div>
-        <div><label for="email" class="block text-sm font-medium mb-2" style="color: var(--text-color);">Email</label> <input type="email" id="email" name="email" required class="w-full px-4 py-3 rounded-xl border-none focus:ring-2 focus:ring-red-500 outline-none" style="background-color: var(--bg-color); color: var(--text-color);" placeholder="your@email.com">
+        <h3 class="font-bold text-white mb-2">Lightning Fast</h3>
+        <p class="text-sm text-cream/60">Process your PDFs instantly without waiting. Cloud-powered speed.</p>
+       </div>
+       <div class="bg-surface rounded-xl border border-white/5 p-5 text-center">
+        <div class="w-12 h-12 bg-accent/20 rounded-full flex items-center justify-center mx-auto mb-3"><i data-lucide="shield" class="w-6 h-6 text-accent"></i>
         </div>
-        <div><label for="message" class="block text-sm font-medium mb-2" style="color: var(--text-color);">Message</label> <textarea id="message" name="message" rows="4" required class="w-full px-4 py-3 rounded-xl border-none focus:ring-2 focus:ring-red-500 outline-none resize-none" style="background-color: var(--bg-color); color: var(--text-color);" placeholder="Your message..."></textarea>
-        </div><button type="submit" class="btn-primary w-full py-4 rounded-xl text-lg font-bold text-white">Send Message</button>
+        <h3 class="font-bold text-white mb-2">Secure &amp; Private</h3>
+        <p class="text-sm text-cream/60">Your files are never stored. All processing is encrypted and secure.</p>
+       </div>
+       <div class="bg-surface rounded-xl border border-white/5 p-5 text-center">
+        <div class="w-12 h-12 bg-accent/20 rounded-full flex items-center justify-center mx-auto mb-3"><i data-lucide="check-circle" class="w-6 h-6 text-accent"></i>
+        </div>
+        <h3 class="font-bold text-white mb-2">Always Free</h3>
+        <p class="text-sm text-cream/60">No hidden fees, subscriptions, or premium tiers. Pure free tools.</p>
+       </div>
+      </div>
+     </section><!-- Frequently Asked Questions -->
+     <section class="max-w-3xl mx-auto px-4 py-12">
+      <h2 class="font-display text-2xl md:text-3xl font-extrabold text-white mb-8 text-center">Frequently Asked Questions</h2>
+      <div class="space-y-4">
+       <div class="bg-surface rounded-xl border border-white/5 p-5">
+        <h3 class="font-bold text-white mb-2">Do you store my PDF files?</h3>
+        <p class="text-sm text-cream/60">No. All files are processed through third-party tools and deleted immediately after processing. We never store your data.</p>
+       </div>
+       <div class="bg-surface rounded-xl border border-white/5 p-5">
+        <h3 class="font-bold text-white mb-2">Is there a file size limit?</h3>
+        <p class="text-sm text-cream/60">Each tool may have different limits. We recommend checking the specific tool's page for file size restrictions.</p>
+       </div>
+       <div class="bg-surface rounded-xl border border-white/5 p-5">
+        <h3 class="font-bold text-white mb-2">Can I use these tools on mobile?</h3>
+        <p class="text-sm text-cream/60">Yes! All our PDF tools are fully responsive and work on phones, tablets, and desktops.</p>
+       </div>
+       <div class="bg-surface rounded-xl border border-white/5 p-5">
+        <h3 class="font-bold text-white mb-2">Do I need to create an account?</h3>
+        <p class="text-sm text-cream/60">No account required. All tools work instantly without registration or signup.</p>
+       </div>
+       <div class="bg-surface rounded-xl border border-white/5 p-5">
+        <h3 class="font-bold text-white mb-2">Are these tools really free?</h3>
+        <p class="text-sm text-cream/60">Yes, completely free! We don't charge for any of our PDF tools. No hidden fees or premium versions required.</p>
+       </div>
+       <div class="bg-surface rounded-xl border border-white/5 p-5">
+        <h3 class="font-bold text-white mb-2">How fast are the PDF tools?</h3>
+        <p class="text-sm text-cream/60">Most operations complete in seconds. Processing speed depends on your file size and internet connection.</p>
+       </div>
+       <div class="bg-surface rounded-xl border border-white/5 p-5">
+        <h3 class="font-bold text-white mb-2">What formats do you support?</h3>
+        <p class="text-sm text-cream/60">We primarily work with PDF files. Some tools may also support converting to/from Word, images, and other formats.</p>
+       </div>
+       <div class="bg-surface rounded-xl border border-white/5 p-5">
+        <h3 class="font-bold text-white mb-2">Is my data encrypted?</h3>
+        <p class="text-sm text-cream/60">Yes! All files are transmitted securely. We recommend using HTTPS connections when uploading sensitive documents.</p>
+       </div>
+       <div class="bg-surface rounded-xl border border-white/5 p-5">
+        <h3 class="font-bold text-white mb-2">Can I batch process multiple files?</h3>
+        <p class="text-sm text-cream/60">Some tools support batch processing. Check the individual tool's page for available batch operation features.</p>
+       </div>
+       <div class="bg-surface rounded-xl border border-white/5 p-5">
+        <h3 class="font-bold text-white mb-2">Do you have customer support?</h3>
+        <p class="text-sm text-cream/60">Yes! Contact us at hello@freepdftoolshub.com for any questions or technical issues.</p>
+       </div>
+      </div>
+     </section>
+    </div><!-- ABOUT SECTION -->
+    <div id="section-about" class="section-view hidden">
+     <section class="max-w-3xl mx-auto px-4 py-12">
+      <h1 class="font-display text-3xl md:text-4xl font-extrabold text-white mb-8 text-center">About Us</h1>
+      <div class="bg-surface rounded-2xl border border-white/5 p-6 md:p-10 space-y-6 text-cream/70 leading-relaxed">
+       <p><strong class="text-white">FreePDFToolsHub.com</strong> is your go-to destination for free, fast, and reliable PDF tools. We aggregate the best online PDF utilities so you never need to install software or create accounts.</p>
+       <p>Our mission is simple: make PDF management accessible to everyone. Whether you need to edit, merge, split, compress, or convert — we've got you covered.</p>
+       <h2 class="font-display text-xl text-white font-bold pt-4">Privacy Policy</h2>
+       <p>We do not collect personal data. All file processing happens through third-party tools. We recommend reviewing each tool's privacy policy for specifics.</p>
+       <h2 class="font-display text-xl text-white font-bold pt-4">Terms of Service</h2>
+       <p>By using this site, you agree that we provide links to third-party tools. We are not responsible for the functionality or availability of external services.</p>
+       <h2 class="font-display text-xl text-white font-bold pt-4">Disclaimer</h2>
+       <p>FreePDFToolsHub.com is an aggregator of free online tools. We do not process or store any of your files. All tools are provided by their respective third-party services.</p>
+      </div>
+     </section>
+    </div><!-- CONTACT SECTION -->
+    <div id="section-contact" class="section-view hidden">
+     <section class="max-w-3xl mx-auto px-4 py-12">
+      <h1 class="font-display text-3xl md:text-4xl font-extrabold text-white mb-8 text-center">Contact Us</h1>
+      <div class="bg-surface rounded-2xl border border-white/5 p-6 md:p-10">
+       <form id="contact-form" class="space-y-4">
+        <div><label for="contact-name" class="block text-sm font-medium text-white mb-2">Your Name</label> <input type="text" id="contact-name" name="name" required class="w-full bg-midnight border border-white/10 rounded-lg px-4 py-2.5 text-white placeholder-cream/30 focus:border-accent focus:outline-none transition-colors" placeholder="John Doe">
+        </div>
+        <div><label for="contact-email" class="block text-sm font-medium text-white mb-2">Your Email</label> <input type="email" id="contact-email" name="email" required class="w-full bg-midnight border border-white/10 rounded-lg px-4 py-2.5 text-white placeholder-cream/30 focus:border-accent focus:outline-none transition-colors" placeholder="you@example.com">
+        </div>
+        <div><label for="contact-message" class="block text-sm font-medium text-white mb-2">Message</label> <textarea id="contact-message" name="message" required rows="4" class="w-full bg-midnight border border-white/10 rounded-lg px-4 py-2.5 text-white placeholder-cream/30 focus:border-accent focus:outline-none transition-colors resize-none" placeholder="Tell us what you think..."></textarea>
+        </div><button type="submit" class="btn-tool w-full bg-accent hover:bg-accentHover text-white font-semibold py-2.5 rounded-lg transition-colors">Send Message</button>
+        <p id="contact-status" class="text-sm text-cream/60 text-center hidden"></p>
        </form>
-       <div id="form-success" class="hidden text-center py-8">
-        <div class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style="background-color: rgba(34, 197, 94, 0.2);">
-         <svg class="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-         </svg>
-        </div>
-        <h3 class="text-xl font-bold mb-2" style="color: var(--text-color);">Message Sent!</h3>
-        <p style="color: var(--secondary-action);">Thank you for reaching out. We'll get back to you soon.</p>
-       </div>
-      </div>
-     </section>
-    </div><!-- Privacy Page -->
-    <div id="page-privacy" class="page-content hidden">
-     <section class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-      <h1 class="text-4xl font-extrabold mb-8 gradient-text text-center">Privacy Policy</h1>
-      <div class="p-8 rounded-2xl space-y-6" style="background-color: var(--surface-color);">
-       <p style="color: var(--secondary-action);">Last updated: January 2025</p>
-       <h2 class="text-xl font-bold" style="color: var(--text-color);">Information We Collect</h2>
-       <p style="color: var(--secondary-action);">FreePDFToolsHub does not collect, store, or process any personal data or uploaded files. All PDF processing is handled by third-party services linked from our platform.</p>
-       <h2 class="text-xl font-bold" style="color: var(--text-color);">Third-Party Services</h2>
-       <p style="color: var(--secondary-action);">When you use the tools linked from our site, you are redirected to third-party services. Each service has its own privacy policy and terms of service that govern your use.</p>
-       <h2 class="text-xl font-bold" style="color: var(--text-color);">Cookies</h2>
-       <p style="color: var(--secondary-action);">We may use essential cookies to improve your browsing experience. These do not track personal information.</p>
-       <h2 class="text-xl font-bold" style="color: var(--text-color);">Contact</h2>
-       <p style="color: var(--secondary-action);">For privacy-related inquiries, please visit our <a href="#contact" style="color: var(--primary-action);">contact page</a>.</p>
-      </div>
-     </section>
-    </div><!-- Terms Page -->
-    <div id="page-terms" class="page-content hidden">
-     <section class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-      <h1 class="text-4xl font-extrabold mb-8 gradient-text text-center">Terms of Service</h1>
-      <div class="p-8 rounded-2xl space-y-6" style="background-color: var(--surface-color);">
-       <p style="color: var(--secondary-action);">Last updated: January 2025</p>
-       <h2 class="text-xl font-bold" style="color: var(--text-color);">Acceptance of Terms</h2>
-       <p style="color: var(--secondary-action);">By accessing FreePDFToolsHub, you agree to these terms. If you do not agree, please do not use our service.</p>
-       <h2 class="text-xl font-bold" style="color: var(--text-color);">Service Description</h2>
-       <p style="color: var(--secondary-action);">FreePDFToolsHub provides links to free third-party PDF tools. We do not host or process PDF files directly.</p>
-       <h2 class="text-xl font-bold" style="color: var(--text-color);">User Responsibilities</h2>
-       <p style="color: var(--secondary-action);">You are responsible for ensuring you have the right to process any documents you upload to third-party services.</p>
-       <h2 class="text-xl font-bold" style="color: var(--text-color);">Limitation of Liability</h2>
-       <p style="color: var(--secondary-action);">FreePDFToolsHub is not liable for any issues arising from the use of linked third-party services.</p>
-      </div>
-     </section>
-    </div><!-- Disclaimer Page -->
-    <div id="page-disclaimer" class="page-content hidden">
-     <section class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-      <h1 class="text-4xl font-extrabold mb-8 gradient-text text-center">Disclaimer</h1>
-      <div class="p-8 rounded-2xl space-y-6" style="background-color: var(--surface-color);">
-       <h2 class="text-xl font-bold" style="color: var(--text-color);">Third-Party Tools</h2>
-       <p style="color: var(--secondary-action);">FreePDFToolsHub aggregates and links to third-party PDF tools. We do not own, operate, or control these tools. Each tool is the property of its respective owner.</p>
-       <h2 class="text-xl font-bold" style="color: var(--text-color);">No Warranty</h2>
-       <p style="color: var(--secondary-action);">The tools and information provided through this website are offered "as is" without any warranty. We make no guarantees about the accuracy, reliability, or availability of any linked services.</p>
-       <h2 class="text-xl font-bold" style="color: var(--text-color);">Use at Your Own Risk</h2>
-       <p style="color: var(--secondary-action);">You use the linked tools at your own risk. Always review the privacy policy and terms of service of each tool before uploading sensitive documents.</p>
-       <h2 class="text-xl font-bold" style="color: var(--text-color);">Affiliate Disclosure</h2>
-       <p style="color: var(--secondary-action);">Some links on this site may be affiliate links. We may earn a commission if you sign up for paid services through these links, at no additional cost to you.</p>
       </div>
      </section>
     </div>
-   </main><!-- Footer -->
-   <footer class="relative z-10 py-12 mt-auto" style="background-color: var(--surface-color);">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-     <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
-      <div>
-       <h4 class="font-bold mb-4" style="color: var(--text-color);">Tools</h4>
-       <ul class="space-y-2">
-        <li><a href="#edit-pdf" class="text-sm hover:text-red-400 transition-colors" style="color: var(--secondary-action);">Edit PDF</a></li>
-        <li><a href="#merge-pdf" class="text-sm hover:text-red-400 transition-colors" style="color: var(--secondary-action);">Merge PDF</a></li>
-        <li><a href="#split-pdf" class="text-sm hover:text-red-400 transition-colors" style="color: var(--secondary-action);">Split PDF</a></li>
-        <li><a href="#compress-pdf" class="text-sm hover:text-red-400 transition-colors" style="color: var(--secondary-action);">Compress PDF</a></li>
-        <li><a href="#convert-pdf-to-word" class="text-sm hover:text-red-400 transition-colors" style="color: var(--secondary-action);">PDF to Word</a></li>
-        <li><a href="#word-to-pdf" class="text-sm hover:text-red-400 transition-colors" style="color: var(--secondary-action);">Word to PDF</a></li>
-       </ul>
+   </main><!-- FOOTER -->
+   <footer class="border-t border-white/5 mt-12">
+    <div class="max-w-6xl mx-auto px-4 py-8">
+     <div class="flex flex-col md:flex-row justify-between items-center gap-4"><span class="text-sm text-cream/50">© 2026 FreePDFToolsHub.com</span>
+      <div class="flex items-center gap-6 text-xs text-cream/40">
+       <a onclick="navigateTo('about')" class="cursor-pointer hover:text-accent transition-colors">About</a> <a onclick="navigateTo('contact')" class="cursor-pointer hover:text-accent transition-colors">Contact</a> <a onclick="navigateTo('about')" class="cursor-pointer hover:text-accent transition-colors">Privacy</a> <a onclick="navigateTo('about')" class="cursor-pointer hover:text-accent transition-colors">Terms</a> <a onclick="navigateTo('about')" class="cursor-pointer hover:text-accent transition-colors">Disclaimer</a>
       </div>
-      <div>
-       <h4 class="font-bold mb-4" style="color: var(--text-color);">Resources</h4>
-       <ul class="space-y-2">
-        <li><a href="#blog" class="text-sm hover:text-red-400 transition-colors" style="color: var(--secondary-action);">Blog</a></li>
-        <li><a href="#about" class="text-sm hover:text-red-400 transition-colors" style="color: var(--secondary-action);">About Us</a></li>
-        <li><a href="#contact" class="text-sm hover:text-red-400 transition-colors" style="color: var(--secondary-action);">Contact</a></li>
-       </ul>
-      </div>
-      <div>
-       <h4 class="font-bold mb-4" style="color: var(--text-color);">Legal</h4>
-       <ul class="space-y-2">
-        <li><a href="#privacy" class="text-sm hover:text-red-400 transition-colors" style="color: var(--secondary-action);">Privacy Policy</a></li>
-        <li><a href="#terms" class="text-sm hover:text-red-400 transition-colors" style="color: var(--secondary-action);">Terms of Service</a></li>
-        <li><a href="#disclaimer" class="text-sm hover:text-red-400 transition-colors" style="color: var(--secondary-action);">Disclaimer</a></li>
-       </ul>
-      </div>
-      <div>
-       <h4 class="font-bold mb-4" style="color: var(--text-color);">Connect</h4>
-       <p class="text-sm mb-4" style="color: var(--secondary-action);">Follow us for updates and tips on PDF management.</p>
-       <div class="flex gap-4"><a href="#" class="w-10 h-10 rounded-lg flex items-center justify-center hover:bg-red-500/20 transition-colors" style="background-color: var(--bg-color);">
-         <svg class="w-5 h-5" style="color: var(--secondary-action);" fill="currentColor" viewbox="0 0 24 24">
-          <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z" />
-         </svg></a> <a href="#" class="w-10 h-10 rounded-lg flex items-center justify-center hover:bg-red-500/20 transition-colors" style="background-color: var(--bg-color);">
-         <svg class="w-5 h-5" style="color: var(--secondary-action);" fill="currentColor" viewbox="0 0 24 24">
-          <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.162-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.401.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.354-.629-2.758-1.379l-.749 2.848c-.269 1.045-1.004 2.352-1.498 3.146 1.123.345 2.306.535 3.55.535 6.607 0 11.985-5.365 11.985-11.987C23.97 5.39 18.592.026 11.985.026L12.017 0z" />
-         </svg></a>
-       </div>
-      </div>
-     </div>
-     <div class="border-t pt-8 text-center" style="border-color: rgba(148, 163, 184, 0.1);">
-      <p class="text-sm" style="color: var(--secondary-action);">© 2026 FreePDFToolsHub.com. All rights reserved.</p>
      </div>
     </div>
    </footer>
   </div>
   <script>
-    // Default configuration
-    const defaultConfig = {
-      site_title: 'FreePDFToolsHub',
-      hero_heading: 'Free PDF Tools Online – Edit, Merge, Split, Compress, Convert',
-      hero_subheading: 'Access all the PDF tools you need — free, fast, and online. No signup or credit card required.',
-      bg_color: '#0f172a',
-      surface_color: '#1e293b',
-      text_color: '#f1f5f9',
-      primary_action: '#ef4444',
-      secondary_action: '#94a3b8'
-    };
+  // ===== DATA =====
+  const tools = [
+    {
+      id: 'edit-pdf',
+      title: 'Edit PDF Online Free',
+      desc: 'Upload your PDF and make changes instantly. Add text, images, annotations and more.',
+      btn: 'Start Editing PDF',
+      link: 'https://www.pdfcandy.com/edit-pdf.html',
+      icon: null,
+      color: 'from-red-500/20 to-orange-500/10',
+      border: 'border-red-500/20'
+    },
+    {
+      id: 'merge-pdf',
+      title: 'Merge PDF Online Free',
+      desc: 'Combine multiple PDF files into one document in seconds. Simple drag and drop.',
+      btn: 'Merge PDFs Now',
+      link: 'https://tools.pdf24.org/en/merge-pdf',
+      icon: 'git-merge',
+      color: 'from-blue-500/20 to-cyan-500/10',
+      border: 'border-blue-500/20'
+    },
+    {
+      id: 'split-pdf',
+      title: 'Split PDF Online Free',
+      desc: 'Split your PDF pages into separate files quickly and effortlessly.',
+      btn: 'Split PDF Now',
+      link: 'https://www.pdf24.org/en/split-pdf',
+      icon: 'scissors',
+      color: 'from-green-500/20 to-emerald-500/10',
+      border: 'border-green-500/20'
+    },
+    {
+      id: 'compress-pdf',
+      title: 'Compress PDF Online Free',
+      desc: 'Reduce PDF file size without losing quality. Perfect for email attachments.',
+      btn: 'Compress PDF Now',
+      link: 'https://www.ilovepdf.com/compress_pdf',
+      icon: 'minimize-2',
+      color: 'from-purple-500/20 to-pink-500/10',
+      border: 'border-purple-500/20'
+    },
+    {
+      id: 'convert-pdf',
+      title: 'Convert PDF to Word Free',
+      desc: 'Convert PDF files into editable Word documents online instantly.',
+      btn: 'Convert PDF Now',
+      link: 'https://www.ilovepdf.com/pdf_to_word',
+      icon: 'file-text',
+      color: 'from-amber-500/20 to-yellow-500/10',
+      border: 'border-amber-500/20'
+    },
+    {
+      id: 'word-to-pdf',
+      title: 'Word to PDF Online Free',
+      desc: 'Convert your Word documents (.docx) into professional PDF files instantly.',
+      btn: 'Convert Word to PDF',
+      link: 'https://www.ilovepdf.com/word_to_pdf',
+      icon: 'file-text',
+      color: 'from-blue-500/20 to-indigo-500/10',
+      border: 'border-blue-500/20'
+    },
+    {
+      id: 'jpg-to-pdf',
+      title: 'JPG to PDF Online Free',
+      desc: 'Convert JPG, PNG, and image files into PDF documents with ease.',
+      btn: 'Convert JPG to PDF',
+      link: 'https://www.ilovepdf.com/jpg_to_pdf',
+      icon: 'image',
+      color: 'from-green-500/20 to-teal-500/10',
+      border: 'border-green-500/20'
+    },
+    {
+      id: 'pdf-to-jpg',
+      title: 'PDF to JPG Online Free',
+      desc: 'Extract pages from PDF and convert them into high-quality JPG images.',
+      btn: 'Convert PDF to JPG',
+      link: 'https://www.ilovepdf.com/pdf_to_jpg',
+      icon: 'image',
+      color: 'from-rose-500/20 to-pink-500/10',
+      border: 'border-rose-500/20'
+    }
+  ];
 
-    // Router functionality
-    function router() {
-      const hash = window.location.hash.slice(1) || 'home';
-      const pages = document.querySelectorAll('.page-content');
-      
-      pages.forEach(page => {
-        page.classList.add('hidden');
-      });
-      
-      const targetPage = document.getElementById(page-${hash});
-      if (targetPage) {
-        targetPage.classList.remove('hidden');
-        window.scrollTo(0, 0);
-      } else {
-        document.getElementById('page-home').classList.remove('hidden');
+  const blogPosts = [
+    { title: 'How to Edit PDF Online Free', desc: 'A step-by-step guide to editing PDFs without installing any software.', tag: 'Tutorial', icon: null },
+    { title: 'Merge PDF Online Easily', desc: 'Learn the fastest way to combine multiple PDF files into one document.', tag: 'Guide', icon: 'git-merge' },
+    { title: 'Compress PDF Without Losing Quality', desc: 'Tips and tricks to reduce your PDF file size while maintaining clarity.', tag: 'Tips', icon: 'minimize-2' },
+    { title: 'Split PDF Online Free in Seconds', desc: 'Extract specific pages from any PDF file with these simple methods.', tag: 'Tutorial', icon: 'scissors' },
+    { title: 'Convert PDF to Word Online Free', desc: 'The best ways to turn your PDF documents into editable Word files.', tag: 'Guide', icon: 'file-text' }
+  ];
+
+  // ===== RENDER =====
+  function createToolCard(tool) {
+    const iconHtml = tool.icon ? `<i data-lucide="${tool.icon}" class="w-5 h-5 text-white"></i>` : '';
+    const iconContainer = tool.icon ? `<div class="w-11 h-11 bg-white/10 rounded-xl flex items-center justify-center mb-3">${iconHtml}</div>` : '';
+    return `
+      <div class="tool-card bg-surface rounded-2xl border ${tool.border} overflow-hidden">
+        <div class="bg-gradient-to-br ${tool.color} p-5 pb-4">
+          ${iconContainer}
+          <h3 class="text-lg font-bold text-white">${tool.title}</h3>
+        </div>
+        <div class="p-5 pt-3">
+          <p class="text-sm text-cream/60 mb-4 leading-relaxed">${tool.desc}</p>
+          <a href="${tool.link}" target="_blank" rel="noopener noreferrer"
+             class="btn-tool inline-flex items-center gap-2 bg-accent hover:bg-accentHover text-white text-sm font-semibold px-5 py-2.5 rounded-xl w-full justify-center shadow-md shadow-accent/20 cursor-pointer">
+            ${tool.btn}
+            <i data-lucide="external-link" class="w-4 h-4"></i>
+          </a>
+        </div>
+      </div>`;
+  }
+
+  function createBlogCard(post, idx) {
+    const iconHtml = post.icon ? `<i data-lucide="${post.icon}" class="w-4 h-4 text-accent"></i>` : '';
+    const iconContainer = post.icon ? `<div class="w-9 h-9 bg-accent/10 rounded-lg flex items-center justify-center flex-shrink-0">${iconHtml}</div>` : '';
+    return `
+      <div class="blog-card bg-surface rounded-2xl border border-white/5 p-5 cursor-pointer" onclick="navigateTo('tools')">
+        <div class="flex items-start gap-3 mb-3">
+          ${iconContainer}
+          <span class="text-[10px] uppercase tracking-wider bg-accent/10 text-accent px-2 py-0.5 rounded-full font-semibold">${post.tag}</span>
+        </div>
+        <h3 class="text-base font-bold text-white mb-2">${post.title}</h3>
+        <p class="text-sm text-cream/50 leading-relaxed">${post.desc}</p>
+        <div class="mt-3 flex items-center gap-1 text-accent text-xs font-semibold">
+          Read More <i data-lucide="arrow-right" class="w-3 h-3"></i>
+        </div>
+      </div>`;
+  }
+
+  function renderGrids() {
+    document.getElementById('tools-grid-home').innerHTML = tools.slice(0, 6).map(createToolCard).join('');
+    document.getElementById('tools-grid-full').innerHTML = tools.map(createToolCard).join('');
+    document.getElementById('blog-grid').innerHTML = blogPosts.map(createBlogCard).join('');
+    lucide.createIcons();
+  }
+
+  // ===== NAVIGATION =====
+  let currentSection = 'home';
+
+  function navigateTo(section) {
+    if (section === currentSection && section !== 'home') return;
+    currentSection = section;
+
+    // Hide all sections
+    document.querySelectorAll('[id^="section-"]').forEach(el => {
+      el.classList.add('hidden');
+    });
+
+    // Show target section
+    const target = document.getElementById('section-' + section);
+    if (target) {
+      target.classList.remove('hidden');
+      // Re-trigger animation
+      target.style.animation = 'none';
+      target.offsetHeight; // force reflow
+      target.style.animation = '';
+    }
+
+    // Update mobile nav
+    document.querySelectorAll('.mobile-nav-item').forEach(btn => {
+      const isActive = btn.dataset.nav === section;
+      btn.classList.toggle('active', isActive);
+      btn.classList.toggle('text-cream/50', !isActive);
+    });
+
+    // Scroll to top
+    document.getElementById('app').scrollTop = 0;
+
+    lucide.createIcons();
+  }
+
+  // ===== ELEMENT SDK =====
+  const defaultConfig = {
+    site_title: 'Free PDF Tools Hub',
+    hero_heading: 'Free PDF Tools Online',
+    hero_subheading: 'Access all the PDF tools you need — free, fast, and online. No signup or credit card required. Manage your PDF files easily.',
+    background_color: '#0f0f23',
+    surface_color: '#1a1a2e',
+    text_color: '#f0ece2',
+    accent_color: '#e74c3c',
+    secondary_action_color: '#8b5cf6',
+    font_family: 'DM Sans',
+    font_size: 16
+  };
+
+  async function onConfigChange(config) {
+    const bg = config.background_color || defaultConfig.background_color;
+    const surface = config.surface_color || defaultConfig.surface_color;
+    const text = config.text_color || defaultConfig.text_color;
+    const accent = config.accent_color || defaultConfig.accent_color;
+    const secondary = config.secondary_action_color || defaultConfig.secondary_action_color;
+    const font = config.font_family || defaultConfig.font_family;
+    const fontSize = config.font_size || defaultConfig.font_size;
+
+    const app = document.getElementById('app');
+    app.style.backgroundColor = bg;
+    app.style.color = text;
+
+    document.querySelectorAll('.bg-surface, .tool-card, .blog-card, [class*="bg-surface"]').forEach(el => {
+      el.style.backgroundColor = surface;
+    });
+
+    document.querySelectorAll('.btn-tool, .bg-accent').forEach(el => {
+      el.style.backgroundColor = accent;
+    });
+
+    document.querySelectorAll('.text-accent').forEach(el => {
+      el.style.color = accent;
+    });
+
+    const siteTitle = document.getElementById('site-title');
+    if (siteTitle) siteTitle.textContent = config.site_title || defaultConfig.site_title;
+
+    const heroH = document.getElementById('hero-heading');
+    if (heroH) {
+      const heading = config.hero_heading || defaultConfig.hero_heading;
+      heroH.innerHTML = heading + '<br><span class="text-accent" style="color:' + accent + '">Edit, Merge, Split & More</span>';
+    }
+
+    const heroS = document.getElementById('hero-subheading');
+    if (heroS) heroS.textContent = config.hero_subheading || defaultConfig.hero_subheading;
+
+    // Font
+    const fontStack = font + ', sans-serif';
+    app.style.fontFamily = fontStack;
+    document.querySelectorAll('.font-display').forEach(el => {
+      el.style.fontFamily = font + ', Playfair Display, serif';
+    });
+
+    // Font size
+    app.style.fontSize = fontSize + 'px';
+    document.querySelectorAll('h1').forEach(el => el.style.fontSize = (fontSize * 2.5) + 'px');
+    document.querySelectorAll('h2').forEach(el => el.style.fontSize = (fontSize * 1.4) + 'px');
+    document.querySelectorAll('h3').forEach(el => el.style.fontSize = (fontSize * 1.15) + 'px');
+    document.querySelectorAll('p').forEach(el => el.style.fontSize = fontSize + 'px');
+  }
+
+  function mapToCapabilities(config) {
+    return {
+      recolorables: [
+        { get: () => config.background_color || defaultConfig.background_color, set: (v) => { config.background_color = v; window.elementSdk.setConfig({ background_color: v }); }},
+        { get: () => config.surface_color || defaultConfig.surface_color, set: (v) => { config.surface_color = v; window.elementSdk.setConfig({ surface_color: v }); }},
+        { get: () => config.text_color || defaultConfig.text_color, set: (v) => { config.text_color = v; window.elementSdk.setConfig({ text_color: v }); }},
+        { get: () => config.accent_color || defaultConfig.accent_color, set: (v) => { config.accent_color = v; window.elementSdk.setConfig({ accent_color: v }); }},
+        { get: () => config.secondary_action_color || defaultConfig.secondary_action_color, set: (v) => { config.secondary_action_color = v; window.elementSdk.setConfig({ secondary_action_color: v }); }}
+      ],
+      borderables: [],
+      fontEditable: {
+        get: () => config.font_family || defaultConfig.font_family,
+        set: (v) => { config.font_family = v; window.elementSdk.setConfig({ font_family: v }); }
+      },
+      fontSizeable: {
+        get: () => config.font_size || defaultConfig.font_size,
+        set: (v) => { config.font_size = v; window.elementSdk.setConfig({ font_size: v }); }
       }
-    }
+    };
+  }
 
-    window.addEventListener('hashchange', router);
-    window.addEventListener('load', router);
+  function mapToEditPanelValues(config) {
+    return new Map([
+      ['site_title', config.site_title || defaultConfig.site_title],
+      ['hero_heading', config.hero_heading || defaultConfig.hero_heading],
+      ['hero_subheading', config.hero_subheading || defaultConfig.hero_subheading]
+    ]);
+  }
 
-    // Mobile menu toggle
-    document.getElementById('mobile-menu-btn').addEventListener('click', () => {
-      const menu = document.getElementById('mobile-menu');
-      menu.classList.toggle('hidden');
-    });
-
-    // Contact form handling
-    document.getElementById('contact-form').addEventListener('submit', (e) => {
+  // ===== CONTACT FORM =====
+  const contactForm = document.getElementById('contact-form');
+  if (contactForm) {
+    contactForm.addEventListener('submit', function(e) {
       e.preventDefault();
-      document.getElementById('contact-form').classList.add('hidden');
-      document.getElementById('form-success').classList.remove('hidden');
-    });
+      const name = document.getElementById('contact-name').value;
+      const email = document.getElementById('contact-email').value;
+      const message = document.getElementById('contact-message').value;
+      const statusEl = document.getElementById('contact-status');
 
-    // Element SDK initialization
-    if (window.elementSdk) {
-      window.elementSdk.init({
-        defaultConfig,
-        onConfigChange: async (config) => {
-          // Update site title
-          document.getElementById('site-title').textContent = config.site_title || defaultConfig.site_title;
-          
-          // Update hero content
-          const heroHeading = document.getElementById('hero-heading');
-          const heroSubheading = document.getElementById('hero-subheading');
-          
-          if (heroHeading) {
-            const headingText = config.hero_heading || defaultConfig.hero_heading;
-            heroHeading.innerHTML = <span class="gradient-text">${headingText.split('–')[0] || headingText}</span><br><span style="color: var(--text-color);">${headingText.split('–')[1] || ''}</span>;
-          }
-          
-          if (heroSubheading) {
-            heroSubheading.textContent = config.hero_subheading || defaultConfig.hero_subheading;
-          }
-          
-          // Update colors
-          document.documentElement.style.setProperty('--bg-color', config.bg_color || defaultConfig.bg_color);
-          document.documentElement.style.setProperty('--surface-color', config.surface_color || defaultConfig.surface_color);
-          document.documentElement.style.setProperty('--text-color', config.text_color || defaultConfig.text_color);
-          document.documentElement.style.setProperty('--primary-action', config.primary_action || defaultConfig.primary_action);
-          document.documentElement.style.setProperty('--secondary-action', config.secondary_action || defaultConfig.secondary_action);
-        },
-        mapToCapabilities: (config) => ({
-          recolorables: [
-            {
-              get: () => config.bg_color || defaultConfig.bg_color,
-              set: (value) => window.elementSdk.setConfig({ bg_color: value })
-            },
-            {
-              get: () => config.surface_color || defaultConfig.surface_color,
-              set: (value) => window.elementSdk.setConfig({ surface_color: value })
-            },
-            {
-              get: () => config.text_color || defaultConfig.text_color,
-              set: (value) => window.elementSdk.setConfig({ text_color: value })
-            },
-            {
-              get: () => config.primary_action || defaultConfig.primary_action,
-              set: (value) => window.elementSdk.setConfig({ primary_action: value })
-            },
-            {
-              get: () => config.secondary_action || defaultConfig.secondary_action,
-              set: (value) => window.elementSdk.setConfig({ secondary_action: value })
-            }
-          ],
-          borderables: [],
-          fontEditable: undefined,
-          fontSizeable: undefined
-        }),
-        mapToEditPanelValues: (config) => new Map([
-          ['site_title', config.site_title || defaultConfig.site_title],
-          ['hero_heading', config.hero_heading || defaultConfig.hero_heading],
-          ['hero_subheading', config.hero_subheading || defaultConfig.hero_subheading]
-        ])
-      });
-    }
-  </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9d952053f7772704',t:'MTc3MzAwNzM2OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+      // Show success message
+      statusEl.textContent = '✓ Thank you! We\'ll be in touch soon.';
+      statusEl.style.color = '#10b981';
+      statusEl.classList.remove('hidden');
+
+      // Reset form
+      contactForm.reset();
+
+      // Hide message after 5 seconds
+      setTimeout(() => {
+        statusEl.classList.add('hidden');
+      }, 5000);
+    });
+  }
+
+  // Init
+  renderGrids();
+  lucide.createIcons();
+
+  if (window.elementSdk) {
+    window.elementSdk.init({
+      defaultConfig,
+      onConfigChange,
+      mapToCapabilities,
+      mapToEditPanelValues
+    });
+  }
+</script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9ddc6595f01c167a',t:'MTc3Mzc1NDY5NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
